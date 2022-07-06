@@ -1,40 +1,85 @@
-//Write a function and use 'call' to call the function
-
-
-var obj ={num: 4} ;
-var add = function(a){
-    return this.num + a;
-};
-console.log(add.call(obj, 3));
-
-// functionname.call(obj ,functionarguments);
-
-//Write a program using apply
-var obj = {num : 2};
-var obj2 = {num : 4};
-var addToThis = function(a,b,c){
-    return this.num + a + b + c;
-};
-var arr =[1,2,6];
-console.log(addToThis.apply(obj2,arr));
-console.log(addToThis.apply(obj,arr));
-
-
-
-//Write a program using bind
-var obj ={ num :8}
-var addToThis = function(a,b,c){
-    return this.num +a +b +c;
-};
-var arr =[1,2,3]
-console.log(addToThis.bind(obj,arr));
-
-//currying
-
-let multiply = function(a,b){
-    console.log(a*b);
+// 'this' inside global scope
+this.table ='window table';
+this.garage ={
+    table: 'garage table',
+    cleanTable()
+{
+    console.log(`cleaning ${this.table}`) 
 }
-let multiplyByTwo = multiply.bind(this,2);
-multiplyByTwo(5);
-let multiplyByThree = multiply.bind(this,2);
-multiplyByThree(6);
+};
+this.garage.table;
+
+console.log(window.table);
+
+//'this' inside an object(private)
+let johnsRoom ={
+    table: 'johns table'
+};
+console.log(johnsRoom.table);
+
+//'this' inside a method
+let johnRoom ={
+    table: 'john table',
+    cleanTable(){
+       console.log(`cleaning ${this.table}`) 
+    }
+};
+johnRoom.cleanTable();
+this.garage.cleanTable();
+console.log(johnRoom.table);
+//this inside a function
+this.table ='window table';
+const cleanTable = function(){
+    console.log(`cleaning ${this.table}`)
+}
+cleanTable();
+//call function
+this.table ='window table';
+const cleanClothes = function(soap){
+    console.log(`cleaning ${this.table}`)
+}
+cleanTable.call(this, 'some soap');
+cleanTable.call(this.garage,'some soap')
+cleanTable.call(johnsRoom,'some soap')
+//this inside an inner function
+const cleanWindow =function(soap){
+
+    const innerFunction = function(){
+        console.log(`cleaning ${this.table} using ${soap}`)
+    }
+    innerFunction.call(this,soap);//inside a function using this is not very useful unless u apply call,apply or bind,arrow functionor this=that
+    innerFunction.bind(this)(soap);
+}
+// use arrow function
+const cleanWindo =function(soap){
+
+    const innerFunction = (soap) => {
+        console.log(`cleaning ${this.table} using ${soap}`)
+    }
+    innerFunction(soap);
+    
+}
+//this inside constructor
+let createRoom = function(name){
+    this.table =`${name}s table`
+}
+createRoom.prototype.cleanTable =function(soap){
+console.log(`cleaning ${this.table} using ${soap}`)
+};
+const riyasRoom = new createRoom('riya')
+const jaysRoom = new createRoom('jay')
+
+// this inside class
+class createRooms{
+ constructor(name){
+    this.table =`${name}s table`
+ }
+ cleanCloth(soap){
+    console.log(`cleaning ${this.table} using ${soap}`);
+ }
+}
+const riyaRoom = new createRoom('riya')
+const jayRoom = new createRoom('jay')
+
+riyaRoom.cleanTable('some soap');
+jayRoom.cleanTable('some soap');
