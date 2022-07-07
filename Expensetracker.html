@@ -28,7 +28,6 @@
         <script>
             // document.querySelector('form').onsubmit =(e) =>
             function saveToLocalStorage(event){
-                alert(event);
                 event.preventDefault();
                 const amount = event.target.amount.value;
                 const expensedescription= event.target.expensedescription.value;
@@ -59,14 +58,13 @@
                 document.getElementById('amount').value = '';
                 document.getElementById('category').value = '';
                 document.getElementById('expensedescription').value = '';
-                
                 if(localStorage.getItem(user.expensedescription) !== null){
                     removeUserFromScreen(user.expensedescription)
                 }
 
-                const parentNode = document.getElementById('listOfExpenses');
-                const childHTML = `<li id=${user.expensedescription}> ${user.amount} - ${user.expensedescription}
-                                        <button onclick=deleteUser('${user.expensedescription}'> Delete </button>
+                const parentNode = document.getElementById('listofExpenses');
+                const childHTML = `<li id=${user.expensedescription}> ${user.category} - ${user.expensedescription} - ${user.amount}
+                                        <button onclick=deleteUser('${user.expensedescription}')> Delete </button>
                                         <button onclick=editUserDetails('${user.amount}','${user.expensedescription}','${user.category}')>Edit  </button>
                                     </li>`
 
@@ -75,10 +73,11 @@
 
            // Edit User
 
-            function editUserDetails(expensedescription, amount){
+            function editUserDetails(amount,expensedescription,category){
 
                 document.getElementById('expensedescription').value = expensedescription;
                 document.getElementById('amount').value = amount;
+                document.getElementById('category').value = category;
 
                 deleteUser(expensedescription)
              }
@@ -93,7 +92,7 @@
             }
 
             function removeUserFromScreen(expensedescription){
-                const parentNode = document.getElementById('listOfExpenses');
+                const parentNode = document.getElementById('listofExpenses');
                 const childNodeToBeDeleted = document.getElementById(expensedescription);
                 if(childNodeToBeDeleted) {
                     parentNode.removeChild(childNodeToBeDeleted)
