@@ -2,8 +2,7 @@ const posts=[
     {titles: 'Post One', body:'This is post one'},
 
     {titles: 'Post Two', body:'This is post two'}
-    ];
-    
+    ];    
     function getPosts()
     { 
         setTimeout(() => 
