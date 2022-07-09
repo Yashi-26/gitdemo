@@ -1,4 +1,3 @@
-
 createPost()
 {
     return new promise(() =>{
@@ -15,9 +14,9 @@ const user ={
     username : 'shreya',
     lastactivitytime:'13 th jan'
 }
-updatelastactivitytime =
+updatelastactivitytime
 {
-    return new Promise((resolve,reject) ={
+    return new Promise((resolve,reject) =>{
         setTimeOut(()=>{
             user.lastactivitytime = new Date().getTime();
             resolve()
